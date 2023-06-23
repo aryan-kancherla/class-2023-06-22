@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "class-2023-06-22"
+  title: "Babynames data website"
   navbar:
     left:
       - href: index.qmd

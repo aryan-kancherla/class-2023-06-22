@@ -1,11 +1,38 @@
 ---
-title: "class-2023-06-22"
+title: "Babynames"
+execute: 
+  echo: false
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+This is an example plot using data from the babynames package.
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(babynames)
+```
 
 ```{r}
-1 + 1
+babynames |>
+    filter(str_detect(name, pattern = "i$")) |>
+       select(year, sex, n, prop) |> filter(year >= 1900) |>
+      summarize(sum_prop = sum(prop), .by = c(year, sex)) |>
+        ggplot(aes(x = year, y = sum_prop, fill = sex, color = sex)) + 
+          geom_area(aes(fill = sex)) + 
+            scale_y_continuous(labels = scales::percent_format()) + 
+              theme(legend.position = "bottom") + 
+                labs(
+                  title = "US Babies Receiving Names Ending in -i",
+                  subtitle = "Boys had an increase in names ending in -i from 1975 and onward",
+                  x = "Year",
+                  y = "Proportions",
+                  caption = "Babynames R Packages"
+                  
+                )
 ```
+
+```{r}
+#babynames |>
+#     filter(str_detect(name, ))
+```
+
